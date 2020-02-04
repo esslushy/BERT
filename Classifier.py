@@ -21,3 +21,9 @@ segment_ids = Input(shape=(MAX_LENGTH,), dtype=tf.int32, name='segment_ids')
 pooled_output, sequence_output = bert_layer([input_token_ids, input_mask, segment_ids])
 # Construct Model
 model = Model(inputs=[input_token_ids, input_mask, segment_ids], outputs=[pooled_output, sequence_output])
+
+tokens, mask, segments = process_input("I am a fish", tokenizer, MAX_LENGTH)
+pool_embs, all_embs = model.predict([[tokens], [mask], [segments]])
+
+print(pool_embs, len(pool_embs))
+print(all_embs, len(all_embs))
