@@ -1,3 +1,4 @@
 # BERT Part of Speech Classifier
 
-# Treebank Dataset
+# Sentiment Dataset
+http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
