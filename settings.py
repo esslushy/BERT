@@ -1,6 +1,6 @@
-# Maximum input sentence length
-MAX_LENGTH=512
 # Number of epochs
-EPOCH=100
+EPOCHS=150
 # Batch Size
-BATCH_SIZE=50
+BATCH_SIZE=32
+# Random Seed
+SEED=7
