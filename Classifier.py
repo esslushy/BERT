@@ -2,7 +2,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text as text
 
-from settings import BATCH_SIZE, EPOCHS, SEED
+from settings import BATCH_SIZE, EPOCHS, SEED, MODE
 
 # Setup random seed and AUTOTUNER
 AUTOTUNE = tf.data.AUTOTUNE
@@ -46,3 +46,13 @@ raw_test_dataset = tf.keras.utils.text_dataset_from_directory(
 )
 # Set it up so that it runs faster while we need to access it
 test_dataset = raw_test_dataset.cache().prefetch(buffer_size=AUTOTUNE)
+
+if (MODE == 'view'):
+    # Take one batch of the training data
+    for text_batch, label_batch in train_dataset.take(1):
+        # Run through all 32 data points in the batch
+        for i in range(len(text_batch)):
+            # Print data
+            print(f'Review: {text_batch.numpy()[i]}')
+            label = label_batch.numpy()[i]
+            print(f'Label: {label} ({class_names[label]})')
