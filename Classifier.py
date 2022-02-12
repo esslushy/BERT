@@ -56,3 +56,16 @@ if (MODE == 'view'):
             print(f'Review: {text_batch.numpy()[i]}')
             label = label_batch.numpy()[i]
             print(f'Label: {label} ({class_names[label]})')
+
+if (MODE == 'train'):
+    # Load BERT modeland its preprocessing model
+    bert_preprocess_model = hub.KerasLayer('https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3')
+    # Experimenting with preprocessed data
+    text_test = ['this is such an amazing movie!']
+    text_preprocessed = bert_preprocess_model(text_test)
+
+    print(f'Keys       : {list(text_preprocessed.keys())}')
+    print(f'Shape      : {text_preprocessed["input_word_ids"].shape}')
+    print(f'Word Ids   : {text_preprocessed["input_word_ids"][0, :12]}')
+    print(f'Input Mask : {text_preprocessed["input_mask"][0, :12]}')
+    print(f'Type Ids   : {text_preprocessed["input_type_ids"][0, :12]}')

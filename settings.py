@@ -8,4 +8,4 @@ SEED=7
 # 'view' shows you some of the data we are working with.
 # 'train' trains the model
 # 'run' runs the model on user input
-MODE='view'
+MODE='train'
