@@ -3,6 +3,7 @@ import tensorflow_hub as hub
 import tensorflow_text as text
 
 from settings import BATCH_SIZE, EPOCHS, SEED, MODE
+from model import build_model
 
 # Setup random seed and AUTOTUNER
 AUTOTUNE = tf.data.AUTOTUNE
@@ -69,3 +70,6 @@ if (MODE == 'train'):
     print(f'Word Ids   : {text_preprocessed["input_word_ids"][0, :12]}')
     print(f'Input Mask : {text_preprocessed["input_mask"][0, :12]}')
     print(f'Type Ids   : {text_preprocessed["input_type_ids"][0, :12]}')
+
+    classifier_model = build_model()
+    tf.keras.utils.plot_model(classifier_model)
