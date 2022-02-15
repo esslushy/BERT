@@ -49,6 +49,7 @@ raw_test_dataset = tf.keras.utils.text_dataset_from_directory(
 test_dataset = raw_test_dataset.cache().prefetch(buffer_size=AUTOTUNE)
 
 if (MODE == 'view'):
+    print('Viewing some data and how it is preprocessed.')
     # Take one batch of the training data
     for text_batch, label_batch in train_dataset.take(1):
         # Run through all 32 data points in the batch
@@ -57,19 +58,19 @@ if (MODE == 'view'):
             print(f'Review: {text_batch.numpy()[i]}')
             label = label_batch.numpy()[i]
             print(f'Label: {label} ({class_names[label]})')
-
-if (MODE == 'train'):
     # Load BERT modeland its preprocessing model
     bert_preprocess_model = hub.KerasLayer('https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3')
     # Experimenting with preprocessed data
     text_test = ['this is such an amazing movie!']
     text_preprocessed = bert_preprocess_model(text_test)
-
+    # Show preprocessing results
     print(f'Keys       : {list(text_preprocessed.keys())}')
     print(f'Shape      : {text_preprocessed["input_word_ids"].shape}')
     print(f'Word Ids   : {text_preprocessed["input_word_ids"][0, :12]}')
     print(f'Input Mask : {text_preprocessed["input_mask"][0, :12]}')
     print(f'Type Ids   : {text_preprocessed["input_type_ids"][0, :12]}')
 
+if (MODE == 'train'):
+    print('Building model.')
     classifier_model = build_model()
-    tf.keras.utils.plot_model(classifier_model)
+    print(classifier_model.summary())
