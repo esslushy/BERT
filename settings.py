@@ -1,7 +1,9 @@
 # Number of epochs
-EPOCHS=150
+EPOCHS=10
 # Batch Size
 BATCH_SIZE=32
+# Location for Tensorboard
+TENSORBOARD_LOCATION='./info'
 # Random Seed
 SEED=7
 # Mode to run in. 
