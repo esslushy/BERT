@@ -1,9 +1,11 @@
 # Number of epochs
-EPOCHS=10
+EPOCHS=5
 # Batch Size
 BATCH_SIZE=32
 # Location for Tensorboard
 TENSORBOARD_LOCATION='./info'
+# Location to save the model to
+MODEL_LOCATION='./models/sentiment_classifier'
 # Random Seed
 SEED=7
 # Mode to run in. 

@@ -2,7 +2,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text as text
 
-from settings import BATCH_SIZE, EPOCHS, SEED, MODE, TENSORBOARD_LOCATION
+from settings import BATCH_SIZE, EPOCHS, SEED, MODE, TENSORBOARD_LOCATION, MODEL_LOCATION
 from model import build_model
 
 # Setup random seed and AUTOTUNER
@@ -76,7 +76,7 @@ if (MODE == 'train'):
     print(classifier_model.summary())
     # Losses and metrics for the model
     loss = tf.keras.losses.BinaryCrossentropy()
-    metrics = [tf.metrics.BinaryAccuracy()]
+    metrics = tf.metrics.BinaryAccuracy()
     # Ready adam optimizer
     optimizer = tf.keras.optimizers.Adam(2e-5)
     # Compile model
@@ -88,9 +88,20 @@ if (MODE == 'train'):
     # Prepare model callbacks (done at the end of each training loop)
     callbacks = [tf.keras.callbacks.TensorBoard(log_dir=TENSORBOARD_LOCATION)]
     # Train model
+    print('Started Training')
     classifier_model.fit(
         x=train_dataset,
         validation_data=validation_dataset,
         epochs=EPOCHS,
         callbacks=callbacks
     )
+    print('Finished Training')
+    # Evaluate final model
+    print('Evaluating Model')
+    loss, metrics = classifier_model.evaluate(test_dataset)
+    # Print out results
+    print(f'Loss: {loss}')
+    print(f'Accuracy: {metrics}')
+    # Save the model
+    print(f'Saving the model to {MODEL_LOCATION}')
+    classifier_model.save(MODEL_LOCATION, include_optimizer=False)
